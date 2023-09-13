@@ -1,0 +1,255 @@
+// Colors
+$off-white: #171717;
+$text-body: #f8f8f8;
+$text-accent: #f00;
+$text-accent-alt: #f00;
+
+// reset
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a, a:focus, a:visited {
+  color: $text-accent;
+  text-decoration: none !important;
+
+  &:hover {
+    color: $text-accent-alt;
+  }
+}
+
+html {
+  font-size: 16px;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+
+// Main
+body {
+  display: grid;
+  background: $off-white;
+  padding: 0.5rem;
+  font-family: 'Roboto Mono', monospace;
+  color: $text-body;
+  background: $off-white;
+  max-width: 100vw;
+  padding-bottom: 250px;
+  overflow-x: hidden;
+  grid-template-areas:
+            "header"
+            "nav"
+            "main"
+            "footer";
+
+
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+    padding-bottom: 0.5rem;
+    grid-template-areas:
+            "header header nav"
+            "main main aside"
+            "main main aside"
+            "footer footer footer";
+  }
+}
+
+.header { grid-area: header; }
+.main { grid-area: main; }
+.nav { grid-area: nav; }
+.aside { grid-area: aside; }
+.footer { grid-area: footer; }
+
+// nav
+.nav ul {
+  display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+  margin-bottom: 1rem;
+  font-style: italic;
+
+  li {
+    color: $text-accent;
+    &:hover {
+      color: $text-accent-alt
+    }
+  }
+}
+
+main {
+  @media (min-width: 768px) {
+    padding-right: 1rem;
+  }
+
+  p {
+    @media (min-width: 768px) {
+      font-size: 1.33rem;
+    }
+
+    &:nth-of-type(1) {
+      @media (min-width: 768px) {
+        margin-top: 100px;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+// layout
+h1 {
+  text-align: center;
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+
+  img {
+    max-width: 80%;
+    @media (min-width: 768px) {
+      max-height: 15vh;
+    }
+    object-fit: contain;
+  }
+}
+
+.header {
+  padding: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding: 0;
+    max-height: 20px;
+    overflow-y: visible;
+  }
+}
+
+
+.footer {
+  background-color: #8f8d8d;
+  color: #293039;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: 0.1rem;
+  text-align: right;
+  padding: 0.25rem;
+  margin-top: 0.25rem;
+  display: none;
+  position: fixed;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  right: 0.25rem;
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+.photo-list {
+  display: flex;
+  flex-flow: column;
+
+  @media (min-width: 768px) {
+    padding-top: 30px;
+    padding-bottom: 60px;
+    flex-flow: row;
+  }
+
+  .photo-item {
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid rgba(lightgray, 0.3);
+    box-shadow: 2px 2px 10px rgba(lightgray, 0.3);
+    position: relative;
+    transition: all 0.05s ease-in-out;
+    max-width: 80%;
+    margin: auto;
+
+    @media (min-width: 768px) {
+      width: 100%;
+      margin: 0;
+    }
+
+    img {
+      width: 100%;
+      // height: 70%;
+      object-fit: contain;
+    }
+
+
+    // @media (min-width: 768px) {
+      // scale: 1.2;
+    // }
+
+    img { filter: sepia(0.1); }
+
+    @mixin shuffle-picture($left, $top, $rotate) {
+      left: $left;
+      top: $top;
+      transform-origin: 0% 0%;
+      transform: rotate($rotate);
+      &:hover {
+        transform: rotate($rotate) scale(1.1);
+
+        @media (min-width: 768px) {
+          z-index: 1;
+          transform: rotate($rotate) scale(1.3);
+        }
+      }
+    }
+
+    &:nth-of-type(1) { @include shuffle-picture(-12px, 20px, -2deg); }
+    &:nth-of-type(2) { @include shuffle-picture(20px, -15px, 8deg); }
+    &:nth-of-type(3) { @include shuffle-picture(-5px, 30px, -4.5deg); }
+    &:nth-of-type(4) { @include shuffle-picture(20px, 48px, 8deg); }
+    &:nth-of-type(5) { @include shuffle-picture(-30px, -22px, -15deg); }
+    &:nth-of-type(6) { @include shuffle-picture(28px, 50px, 12deg); }
+
+    // TODO: randomize via JS on every page load?
+    // @for $t from 1 through 3 {
+    //   &:nth-of-type(even) {
+    //     left: 7px*$t*1.45;
+    //     top: 5px*$t*1.3;
+    //     transform-origin: 0% 0%;
+    //     transform: rotate(2deg*$t);
+    //     &:hover {
+    //       transform: rotate(2deg*$t) scale(1.6);
+    //     }
+    //   }
+    // }
+  }
+}
+
+
+// Embed
+[data-bandcamp-aside] {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+[data-bandcamp-footer] {
+  position: fixed;
+  bottom: 0;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.5rem;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
